@@ -1,4 +1,4 @@
-# Curso React - Rocketseat
+# Curso ReactJS - Rocketseat
 Uma biblioteca JavaScript para criar interfaces de usuário. 
 Com React podemos criar um frontende das aplicações de uma maneira mais simplex, seguindo padrões de programação.
 
@@ -83,4 +83,11 @@ Dentro do arquivo **index.js** remover as linhas
 ##### Entendendo melhor os componentes
 O arquivo **index.js** que fica dentro de /src é o principal arquivo da aplicação.
 Ele que será lido primeiro sempre que a aplicação rodar.
+O curso eplicou de maneira complicada o que eram componentes, por isto, utilizar o link abaixo para saber mais:
+
+    [https://pt-br.reactjs.org/docs/components-and-props.html]
+
+## Criando Header
+Primeiro componente para dar uma estilizada no App.
+
 
