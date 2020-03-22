@@ -90,4 +90,96 @@ O curso eplicou de maneira complicada o que eram componentes, por isto, utilizar
 ## Criando Header
 Primeiro componente para dar uma estilizada no App.
 
+Criar uma pasta chamada **components** dentro de '/src'
+
+Criar uma pasta dentro de components chamada **Helper**
+
+    ./src/components/Header
+
+Dentro de 'Helper', criar um arquivo chamado **index.js** com o conteúdo abaixo:
+
+```js
+    import React from 'react';
+
+    //Podemos criar componentes dentro do React somente com funções.
+    //Não é necessario fazer 'class Header extends Component'.......
+    const Header = () => <header id="main-header">Segatto</header>;
+
+    export default Header;
+```
+
+##### Importar Header no App
+Adicionar linha abaixo dentro de **./src/App.js** logo no início do código, na segunda linha.
+
+```js  
+    import Header from './components/Header';
+```
+
+Fazer mais alguns ajustes no App renderizando o Header.
+Arquivo final abaixo: 
+
+```js
+    import React from 'react';
+    import Header from './components/Header';
+
+    const App = () => (
+        <div className="App">
+            <Header />
+        </div>
+    );
+
+    export default App;
+```
+
+##### Estilizar Header
+Criar arquivo **style.css** dentro do './src/components/Header'
+
+Conteúdo: 
+
+```css
+    header#main-header { 
+        width: 100%;
+        height: 60px;
+        background: #da552f;
+        font-size: 18px;
+        font-weight: bold;
+        color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+```
+
+Importar o css dentro do arquivo **index.js** em  './src/components/Header'.
+Colocar a linha abaixo após a linha que importa o React
+
+```js
+    import './style.css';
+```
+##### Estilizar css geral
+Criar arquivo **style.css** dentro de './src'
+
+Conteúdo: 
+
+```css
+    * {
+        margin: 0;
+        padding: 0;
+        outline: 0;
+        box-sizing: border-box;
+    }
+
+    body{ 
+        font-family: Arial, Helvetica, sans-serif;
+        background: #fafafa;
+        color: #333;
+    }
+```
+
+Importar dentro d o arquivo **App.js** em './src'.
+Utilizar a seguinte linha nas linhas do topo:
+
+```js
+    import './style.css';
+```
 
