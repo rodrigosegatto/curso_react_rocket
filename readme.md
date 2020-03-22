@@ -42,3 +42,45 @@ Comando abaixo criará nosso projeto React, o qual chamaremos de 'huntweb'.
 
 Deverá abrir o endereço do App no navegador web [http://localhost:3000]
 
+## O que são componentes? 
+
+##### remover arquivos desnecessarios
+Acessar a pasta /src e remover os arquivos **App.css, index.css, App.test.js, logo.svg**
+
+##### Ajuste arquivos
+Dentro do arquivo **App.js** remover as linhas 
+
+```js
+    import logo from './logo.svg';
+    import './App.css';
+```
+NO mesmo arquivo, remover tudo dentro da tag html abaixo
+    
+    <div className="App">
+
+Ficará assim: 
+
+```js
+    import React from 'react';
+
+    function App() {
+    return (
+        <div className="App">
+        <h1>Hello Segatto</h1>
+        </div>
+    );
+    }
+
+    export default App;
+
+```
+
+Dentro do arquivo **index.js** remover as linhas 
+
+```js
+    import './index.css';
+```
+##### Entendendo melhor os componentes
+O arquivo **index.js** que fica dentro de /src é o principal arquivo da aplicação.
+Ele que será lido primeiro sempre que a aplicação rodar.
+
