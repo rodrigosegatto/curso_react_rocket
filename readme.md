@@ -254,6 +254,8 @@ Ajustar a const App para também renderizar a Main. Incluir após o Header a tag
 
     <Main /> 
 
+Ficando:
+
 ```js
     const App = () => (
         <div className="App">
