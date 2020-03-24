@@ -18,6 +18,8 @@ export default class Main extends Component {
     //Faz uma requisição para a API buscando produtos
     loadProducts = async () => {
         const response = await api.get('/products');
+
+        //SetState é padrão do React para mandar um valor ao state
         this.setState({products: response.data.docs});
     }
     

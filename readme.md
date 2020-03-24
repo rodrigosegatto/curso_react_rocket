@@ -250,7 +250,7 @@ Comando nas primeiras linhas:
     import Main from './pages/main';
 ```
 
-Ajustar a const App para também renderizar a Main após o Header incluindo <Main />: 
+Ajustar a const App para também renderizar a Main. Incluir após o Header a tag **<Main />**: 
 
 ```js
     const App = () => (
@@ -287,6 +287,8 @@ O código de **./src/pages/main/index.js** agora ficará como abaixo
         //Faz uma requisição para a API buscando produtos
         loadProducts = async () => {
             const response = await api.get('/products');
+
+            //SetState é padrão do React para mandar um valor ao state
             this.setState({products: response.data.docs});
         }
         
