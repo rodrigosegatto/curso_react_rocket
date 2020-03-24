@@ -250,7 +250,9 @@ Comando nas primeiras linhas:
     import Main from './pages/main';
 ```
 
-Ajustar a const App para também renderizar a Main. Incluir após o Header a tag **<Main />**: 
+Ajustar a const App para também renderizar a Main. Incluir após o Header a tag 
+
+    <Main /> 
 
 ```js
     const App = () => (
