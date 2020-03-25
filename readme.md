@@ -376,3 +376,207 @@ Nas primeiras linhas inserir:
 ```
 
 ## Páginas Anterior/Próximo
+
+##### Arquivo CSS
+Editar o arquivo **styles.css** em './src/pages/main/' adicionando as seguintes linhas ao final
+
+```css
+    .product-list .actions {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .product-list .actions button {
+        padding: 10px;
+        border-radius: 5px;
+        border: 0;
+        background: #da552f;
+        color: #ffF;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .product-list .actions button[disabled] {
+        opacity: 0.5;
+        cursor: default;
+    }
+
+    .product-list .actions button:hover {
+        opacity: 0.7;
+    }
+```
+
+##### Arquivo Index da Main
+Ajustar o arquivo **index.js** de './src/pages/main/ deixando como abaixo para apresentar os botões próximo e anterior e ter seu funcionamento correto
+
+```js
+    import React, {Component} from 'react';
+    import api from '../../services/api';
+    import './styles.css';
+
+    export default class Main extends Component {
+        
+        //Armazena objeto produtos no estado
+        state = {
+            products: [],
+            productInfo: {},
+            page: 1 //Pagina inicial da aplicação
+        };
+        
+        //Executar uma ação imediata sempre que o componente for exibido em tela.
+        //Para isto, sempre usar componentDidMount
+        componentDidMount(){
+            this.loadProducts();
+        }
+
+        //Faz uma requisição para a API buscando produtos
+        loadProducts = async (page = 1) => {
+            const response = await api.get(`/products?page=${page}`);
+
+            //docs redebe docs de response.data e o resto (...) em productInfo
+            const {docs, ...productInfo} = response.data;
+
+            //SetState é padrão do React para mandar um valor ao state
+            this.setState({products: docs, productInfo, page});
+        }
+        
+        //Próxima Pagina
+        nextPage = () => {
+            //Recebe page e productInfo do estado
+            const {page, productInfo} = this.state;
+            
+            //Se página atual igual ao total de paginas não faz nada
+            if(page === productInfo.pages) return;
+
+            //Caso contrário, segue e acrescenta uma página
+            const pageNumber = page + 1;
+
+            this.loadProducts(pageNumber);
+        }
+
+        prevPage = () => {
+            const {page, productInfo} = this.state;
+
+            //Se a página igual a 1, não temos como voltar anterior
+            if(page === 1) return;
+
+            //Caso contrário, segue e diminui uma página
+            const pageNumber = page -1;
+
+            this.loadProducts(pageNumber);
+        }
+
+        //sempre o ultimo, executa tudo e depois o render() automaticamente mostrando em tela
+        render(){
+            const {products, page, productInfo} = this.state;
+
+            return (
+                <div className="product-list"> 
+                    {products.map(product => (
+                        <article key={product._id}>
+                            <strong>{product.title}</strong>
+                            <p>{product.description}</p>
+                            <a href="">Acessar</a>
+                        </article>
+                    ))}
+                    <div className="actions">
+                        <button disabled={page===1} onClick={this.prevPage}>Anterior</button>
+                        <button disabled={page===productInfo.pages} onClick={this.nextPage}>Proximo</button>
+                    </div>
+                </div>
+            );
+        }
+    }
+```
+
+## Configurando Navegação
+
+##### react-router-dom
+Ajustar a aplicação para podermos acessar com uso de rotas
+
+Instalar react-router-dom. Rodar no terminal: 
+
+    yarn add react-router-dom
+
+##### Criando pagina Produto
+Antes de configurar as rotas, vamos criar a pagina de produtos que permitirá ver os produtos em detalhe. 
+Em './src/pages' criar uma pasta **product** com arquivo **index.js** dentro.
+
+Conteúdo:
+
+```js 
+    import React, {Component} from 'react';
+
+    export default class Product extends Component {
+        render(){
+            return <h1>Hello Word</h1>
+        }
+    }
+```
+
+##### Arquivo de Rotas
+Criar um arquivo chamado **routes.js** em './src'
+Nele importar as paginas que terão rotas de acesso e configurar as rotas, para quais páginas irão encaminhar o usuário.
+
+Conteúdo do arquivo:
+
+```js
+    import React from 'react';
+    import {BrowserRouter, Switch, Route} from 'react-router-dom';
+    import Main from './pages/main';
+    import Product from './pages/product';
+
+    const Routes = () => (
+        <BrowserRouter>
+            <Switch>
+                <Route exact path='/' component={Main} />
+                <Route path='/products/:id' component={Product} />
+            </Switch>
+        </BrowserRouter>
+    );
+
+    export default Routes;
+```
+
+##### Arquivo APP
+Ajustar arquivo **App.js** em './src'.
+Importar as rotas adicionando o comando abaixo na segunda linha: 
+
+```js
+    import Routes from './routes';
+```
+
+Dentro da constante App, substituir a tag
+    
+    <Main />
+
+    por 
+
+    <Routes />
+
+##### Pronto.
+Basta acessar http://endereco/products/1 que estará acessando nossa rota.
+
+##### Ajustar Links
+
+Nas primeiras linhas do arquivo **.src/pages/main/index.js** importar o componente Link de react-router-dom
+Estaremos configurando o link de acesso aos produtos.
+
+```js
+    import {Link} from 'react-router-dom';
+```
+
+Substituir o trecho abaixo
+
+    <a href="">Acessar</a>
+
+por 
+
+    <Link to={`/products/${product._id}`}>Acessar </Link>
+
+
+## Navegando pro Detalhe
+
+Iremos agora mostrar os dados do produto.
